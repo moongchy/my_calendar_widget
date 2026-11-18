@@ -1,0 +1,26 @@
+name: Build MyCalendar
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build app and widget
+        run: xcodebuild -project MyCalendar.xcodeproj -scheme MyCalendarEditor -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+      - name: Package app
+        run: |
+          mkdir -p output
+          cp -R build/Build/Products/Release/MyCalendarEditor.app output/MyCalendar.app
+          ditto -c -k --sequesterRsrc --keepParent output/MyCalendar.app output/MyCalendar-macOS.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MyCalendar-macOS
+          path: output/MyCalendar-macOS.zip
+          if-no-files-found: error

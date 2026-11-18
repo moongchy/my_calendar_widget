@@ -1,0 +1,44 @@
+name: MyCalendar
+options:
+  bundleIdPrefix: com.moongchy
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    MACOSX_DEPLOYMENT_TARGET: 14.0
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+targets:
+  MyCalendarEditor:
+    type: application
+    platform: macOS
+    sources:
+      - path: Shared/CalendarData.swift
+      - path: MyCalendarEditor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.moongchy.MyCalendar
+        INFOPLIST_FILE: MyCalendarEditor/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Shared/MyCalendar.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: MyCalendar
+        ENABLE_APP_SANDBOX: NO
+    dependencies:
+      - target: MyCalendarWidget
+        embed: true
+  MyCalendarWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: Shared/CalendarData.swift
+      - path: MyCalendarWidget
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.moongchy.MyCalendar.Widget
+        CODE_SIGN_ENTITLEMENTS: Shared/MyCalendar.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: MyCalendar Widget
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+        ENABLE_APP_SANDBOX: NO
