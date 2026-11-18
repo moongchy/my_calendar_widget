@@ -45,4 +45,3 @@ jobs:
           name: MyCalendar-macOS
           path: output/MyCalendar-macOS.zip
           if-no-files-found: error
-```
