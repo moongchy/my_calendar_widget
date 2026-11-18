@@ -39,6 +39,8 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Shared/MyCalendar.entitlements
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: MyCalendar Widget
+        INFOPLIST_KEY_NSExtension_NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        INFOPLIST_KEY_NSExtension_NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).Widget"
         APPLICATION_EXTENSION_API_ONLY: YES
         SKIP_INSTALL: YES
         ENABLE_APP_SANDBOX: NO
